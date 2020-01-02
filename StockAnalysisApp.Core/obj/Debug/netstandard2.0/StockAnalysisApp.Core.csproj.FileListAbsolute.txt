@@ -1,0 +1,9 @@
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\bin\Debug\netstandard2.0\StockAnalysisApp.Core.deps.json
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\bin\Debug\netstandard2.0\StockAnalysisApp.Core.dll
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\bin\Debug\netstandard2.0\StockAnalysisApp.Core.pdb
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.csproj.CoreCompileInputs.cache
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.AssemblyInfoInputs.cache
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.AssemblyInfo.cs
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.dll
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.pdb
+C:\Users\Cytra\source\repos\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.csprojAssemblyReference.cache
