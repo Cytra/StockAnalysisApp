@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,10 +20,12 @@ namespace StockAnalysisApp.Services.API
         private readonly IWindowsLogger _logger;
         private readonly IStockSymbolService _symbolService;
 
-        public DCFService(IWindowsLogger logger, IStockSymbolService symbolService)
+        public DCFService(
+            IWindowsLogger logger,
+            IStockSymbolService symbolService)
         {
-            _logger = logger;
-            _symbolService = symbolService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _symbolService = symbolService ?? throw new ArgumentNullException(nameof(symbolService));
         }
         public async Task<DcfDto> GetDcf(string stock)
         {
@@ -61,8 +65,8 @@ namespace StockAnalysisApp.Services.API
                 _logger.WriteInformation("Getting DCF List");
                 using (var httpClient = new HttpClient())
                 {
-                    var stockListString = _symbolService.GetStockListString(stocks, 15);
-                    foreach(var stockListItem in stockListString)
+                    var stockListString = _symbolService.GetStockListString(stocks, 5);
+                    foreach (var stockListItem in stockListString)
                     {
                         using (var request = new HttpRequestMessage(new HttpMethod("GET"), _dcfUrl + stockListItem))
                         {
@@ -79,13 +83,14 @@ namespace StockAnalysisApp.Services.API
                                 {
                                     result.Add(responseResultitem);
                                 }
-                            } else
+                            }
+                            else
                             {
                                 throw new Exception($"Failed http call + {stockListItem}");
                             }
                         }
                     }
- 
+
                 }
             }
             catch (Exception ex)

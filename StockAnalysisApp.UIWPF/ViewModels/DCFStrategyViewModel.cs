@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.Interfaces;
 using System;
@@ -20,7 +21,8 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         private readonly IStockListService _stockListService;
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
-        private readonly IDCFService _dCFService;
+        private readonly IDcfFacade _dCFfacade;
+        private readonly IDcfRepository _dcfRepository;
 
         public SymbolsList SymbolList { get; set; }
 
@@ -60,6 +62,40 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             }
         }
 
+        private List<DcfDto> _sorteddcfDtos;
+        public List<DcfDto> SortedDcfDtos
+        {
+            get { return _sorteddcfDtos; }
+            set
+            {
+                _sorteddcfDtos = value;
+                OnPropertyChanged(nameof(SortedDcfDtos));
+            }
+        }
+
+        private DcfDto _selectedDcfDto;
+        public DcfDto SelectedDcfDto
+        {
+            get { return _selectedDcfDto; }
+            set
+            {
+                _selectedDcfDto = value;
+                OnPropertyChanged(nameof(SelectedDcfDto));
+            }
+        }
+
+        private List<DcfDto> _dcfDtos;
+        public List<DcfDto> DcfDtos
+        {
+            get { return _dcfDtos; }
+            set
+            {
+                _dcfDtos = value;
+                OnPropertyChanged(nameof(SelectedStock));
+            }
+        }
+
+
         private string _stockTicker;
         public string StockTicker
         {
@@ -73,12 +109,19 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         }
         public ICommand GetNewDCF { get; set; }
 
-        public DCFStrategyViewModel(IStockListService stockListService, IMapper mapper, IWindowsLogger logger, IDCFService dCFService)
+        public DCFStrategyViewModel(
+            IStockListService stockListService,
+            IMapper mapper,
+            IWindowsLogger logger,
+            IDcfFacade dCFfacade,
+            IDcfRepository dcfRepository
+            )
         {
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _dCFService = dCFService ?? throw new ArgumentNullException(nameof(dCFService));
+            _dCFfacade = dCFfacade ?? throw new ArgumentNullException(nameof(dCFfacade));
+            _dcfRepository = dcfRepository ?? throw new ArgumentNullException(nameof(dcfRepository));
             GetNewDCF = new DelegateCommand(ExcecuteGetNewDCF);
             InitializeData();
         }
@@ -91,22 +134,23 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                 {
                     SymbolList = await _stockListService.GetStockList();
                     Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
-                    var stocksWithDcf = new List<Stock>();
-                    var stocksDcf = await _dCFService.GetDcfList(Stocks);
+                    await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
+                    DcfDtos = await _dcfRepository.GetDcfDto();
+                    SortedDcfDtos = DcfDtos;
 
-                    foreach (var stock in Stocks)
-                    {
-                        if (Stocks.IndexOf(stock) > 100) break;
-                        var stockDcf = await _dCFService.GetDcf(stock.Symbol);
-                        _logger.WriteInformation(Stocks.IndexOf(stock).ToString());
-                        var stockWithDcf = _mapper.Map<DcfDto, Stock>(stockDcf, stock);
-                        if (stockWithDcf != null)
-                        {
-                            stocksWithDcf.Add(stockWithDcf);
-                        }
-                    }
+                    //foreach (var stock in Stocks)
+                    //{
+                    //    if (Stocks.IndexOf(stock) > 100) break;
+                    //    var stockDcf = await _dCFService.GetDcf(stock.Symbol);
+                    //    _logger.WriteInformation(Stocks.IndexOf(stock).ToString());
+                    //    var stockWithDcf = _mapper.Map<DcfDto, Stock>(stockDcf, stock);
+                    //    if (stockWithDcf != null)
+                    //    {
+                    //        stocksWithDcf.Add(stockWithDcf);
+                    //    }
+                    //}
 
-                    SortedStocks = stocksWithDcf;
+                    //SortedStocks = stocksWithDcf;
                 }
                 catch (Exception ex)
                 {
@@ -117,13 +161,20 @@ namespace StockAnalysisApp.UIWPF.ViewModels
 
         private void InitializeData()
         {
-            
+            Task.Run(async () =>
+            {
+                DcfDtos = await _dcfRepository.GetDcfDto();
+                SortedDcfDtos = DcfDtos;
+            });
         }
 
         private void SortList(string value)
         {
-            SortedStocks = Stocks
-                .Where(x => x.Symbol.ToUpper().Contains(value.ToUpper()) || x.Name.ToUpper().Contains(value.ToUpper()))
+            if(string.IsNullOrEmpty(value)){
+                SortedDcfDtos = DcfDtos;
+            }
+            SortedDcfDtos = DcfDtos
+                .Where(x => x.symbol.ToUpper().Contains(value.ToUpper()))
                 .ToList();
         }
 

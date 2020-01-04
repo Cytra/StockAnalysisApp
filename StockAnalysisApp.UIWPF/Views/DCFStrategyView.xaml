@@ -41,7 +41,7 @@
                  Grid.Column="3"
                  Text="{Binding StockTicker, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <DataGrid ItemsSource="{Binding SortedStocks}"
+        <!--<DataGrid ItemsSource="{Binding SortedStocks}"
                   Grid.Row="5"
                   Grid.Column="1"
                   Grid.ColumnSpan="3"
@@ -53,6 +53,21 @@
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
                 <DataGridTextColumn Header="DCF" Binding="{Binding DCF}" Width="*"/>
                 <DataGridTextColumn Header="Diff" Binding="{Binding Diff}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+        <DataGrid ItemsSource="{Binding SortedDcfDtos}"
+                  Grid.Row="5"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedDcfDto}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding symbol}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=yyyy-MM-dd}" Width="*"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding StockPrice, StringFormat={}{0:#,#.00}}" Width="*"/>
+                <DataGridTextColumn Header="DCF" Binding="{Binding DCF, StringFormat={}{0:#,#.00}}" Width="*"/>
+                <DataGridTextColumn Header="Diff" Binding="{Binding Diff, StringFormat={}{0:#,#.00}}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

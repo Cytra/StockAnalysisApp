@@ -2,8 +2,11 @@
 using Caliburn.Micro;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data.DbContexts;
+using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.API;
+using StockAnalysisApp.Services.ApiFacade;
 using StockAnalysisApp.Services.Interfaces;
 using StockAnalysisApp.UIWPF.ViewModels;
 using StockAnalysisApp.UIWPF.Views;
@@ -49,6 +52,9 @@ namespace StockAnalysisApp.UIWPF
                 .Singleton<IStockListService,StockListService>()
                 .Singleton<IDCFService,DCFService>()
                 .Singleton<IStockSymbolService,StockSymbolService>()
+                .PerRequest<IDcfFacade, DcfFacade>()
+                .PerRequest<IDcfRepository, DcfRepository>()
+                .PerRequest<StockDbContext>()                
                 .PerRequest<DCFStrategyViewModel>()
                 .PerRequest<MainViewModel>()
                 .RegisterInstance(

@@ -93,7 +93,11 @@
         },
         "frameworks": {
           "netstandard2.0": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj": {
+                "projectPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
