@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockAnalysisApp.UIWPF.Views"
         mc:Ignorable="d"
+        Closing="DataWindow_Closing"
         Title="MainView" Height="800" Width="850"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -25,6 +26,8 @@
             <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
 
@@ -37,20 +40,24 @@
                  Grid.Column="3"
                  Text="{Binding StockTicker, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <Button Grid.Row="1" Grid.Column="5" Command="{Binding GetDCF}">GET DCF</Button>
+        <Label Grid.Row="1"
+               Grid.Column="5"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Center"
+               >Strategies</Label>
+        <Button Grid.Row="3" Grid.Column="7" Command="{Binding GetDCF}">DCF</Button>
 
         <DataGrid ItemsSource="{Binding SortedStocks}"
                   Grid.Row="3"
                   Grid.Column="1"
                   Grid.ColumnSpan="3"
+                  Grid.RowSpan="3"
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedStock}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Symbol" Binding="{Binding Name}" Width="3*"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Symbol}" Width="*"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
-                <DataGridTextColumn Header="DCF" Binding="{Binding DCF}" Width="*"/>
-                <DataGridTextColumn Header="Diff" Binding="{Binding Diff}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

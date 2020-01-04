@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj": {}
+    "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj": {
+    "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj",
         "projectName": "StockAnalysisApp.Core",
-        "projectPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj",
+        "projectPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj",
         "packagesPath": "C:\\Users\\Cytra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\obj\\",
+        "outputPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -66,14 +66,14 @@
         }
       }
     },
-    "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj": {
+    "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj",
+        "projectUniqueName": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj",
         "projectName": "StockAnalysisApp.Logger",
-        "projectPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj",
+        "projectPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Logger\\StockAnalysisApp.Logger.csproj",
         "packagesPath": "C:\\Users\\Cytra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Logger\\obj\\",
+        "outputPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Logger\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -94,8 +94,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj": {
-                "projectPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj"
+              "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj": {
+                "projectPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Core\\StockAnalysisApp.Core.csproj"
               }
             }
           }

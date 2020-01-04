@@ -33,6 +33,7 @@ namespace StockAnalysisApp.Logger.Loggers
         {
             return new LogDetail()
             {
+                Message = message,
                 Timestamp = DateTime.Now,
                 UserName = Environment.UserName,
                 Exception = ex

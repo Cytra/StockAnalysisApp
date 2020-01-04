@@ -5,6 +5,7 @@ using StockAnalysisApp.Core.Model;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.API;
 using StockAnalysisApp.Services.Interfaces;
+using StockAnalysisApp.UIWPF.ViewModels;
 using StockAnalysisApp.UIWPF.Views;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,9 @@ namespace StockAnalysisApp.UIWPF
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IWindowsLogger, ConsoleLogger>()
                 .Singleton<IStockListService,StockListService>()
+                .Singleton<IDCFService,DCFService>()
+                .Singleton<IStockSymbolService,StockSymbolService>()
+                .PerRequest<DCFStrategyViewModel>()
                 .PerRequest<MainViewModel>()
                 .RegisterInstance(
                     typeof(IMapper),

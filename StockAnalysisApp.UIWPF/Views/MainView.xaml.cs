@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace StockAnalysisApp.UIWPF.Views
         public MainView()
         {
             InitializeComponent();
+        }
+
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

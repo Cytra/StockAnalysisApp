@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj": {}
+    "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj": {
+    "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj",
+        "projectUniqueName": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj",
         "projectName": "StockAnalysisApp.Data",
-        "projectPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj",
+        "projectPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Data\\StockAnalysisApp.Data.csproj",
         "packagesPath": "C:\\Users\\Cytra\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Cytra\\source\\repos\\StockAnalysisApp\\StockAnalysisApp.Data\\obj\\",
+        "outputPath": "C:\\Users\\Cytra\\Desktop\\CSharpApps\\stockAnalysisApp\\StockAnalysisApp\\StockAnalysisApp.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [

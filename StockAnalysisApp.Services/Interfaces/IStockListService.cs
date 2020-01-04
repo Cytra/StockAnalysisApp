@@ -9,6 +9,5 @@ namespace StockAnalysisApp.Services.Interfaces
     public interface IStockListService
     {
         Task<SymbolsList> GetStockList();
-        Task<DcfDto> GetDcf(string stock);
     }
 }

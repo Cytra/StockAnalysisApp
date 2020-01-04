@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RestSharp;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.Interfaces;
@@ -15,7 +14,7 @@ namespace StockAnalysisApp.Services.API
     public class StockListService : IStockListService
     {
         private const string _apiUrl = "https://financialmodelingprep.com/api/v3/company/stock/list";
-        private const string _dcfUrl = "https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/";
+        
         private readonly IWindowsLogger _logger;
 
         public StockListService(IWindowsLogger logger)
@@ -51,33 +50,6 @@ namespace StockAnalysisApp.Services.API
             return result;
         }
 
-        public async Task<DcfDto> GetDcf(string stock)
-        {
-            DcfDto result = null;
-            try
-            {
-                _logger.WriteInformation("Getting DCF List");
-                using (var httpClient = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(new HttpMethod("GET"), _dcfUrl + stock))
-                    {
-                        request.Headers.TryAddWithoutValidation("Upgrade-Insecure-Requests", "1");
-
-                        var response = await httpClient.SendAsync(request);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var jsonString = await response.Content.ReadAsStringAsync();
-                            result = JsonConvert.DeserializeObject<DcfDto>(jsonString);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.WriteError("Error calling DCF API", ex);
-            }
-            _logger.WriteInformation("Received DCF");
-            return result;
-        }
+        
     }
 }
