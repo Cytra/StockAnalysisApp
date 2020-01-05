@@ -65,7 +65,7 @@ namespace StockAnalysisApp.Services.API
                 _logger.WriteInformation("Getting DCF List");
                 using (var httpClient = new HttpClient())
                 {
-                    var stockListString = _symbolService.GetStockListString(stocks, 5);
+                    var stockListString = _symbolService.GetStockListString(stocks, 100);
                     foreach (var stockListItem in stockListString)
                     {
                         using (var request = new HttpRequestMessage(new HttpMethod("GET"), _dcfUrl + stockListItem))

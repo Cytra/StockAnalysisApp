@@ -316,8 +316,12 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="DCFTests.cs" />
+    <Compile Include="ViewModels\CompanyKeyMetricsViewModel.cs" />
     <Compile Include="ViewModels\DCFStrategyViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\CompanyKeyMetricsView.xaml.cs">
+      <DependentUpon>CompanyKeyMetricsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DCFStrategyView.xaml.cs">
       <DependentUpon>DCFStrategyView.xaml</DependentUpon>
     </Compile>
@@ -353,6 +357,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CompanyKeyMetricsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DCFStrategyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

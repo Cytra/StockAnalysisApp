@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\App.xaml
-21454993698
+3256531577
 122021194728
-11-1387599315
+131676080644
 205-897393058
-Views\DCFStrategyView.xaml;Views\MainView.xaml;
+Views\CompanyKeyMetricsView.xaml;Views\DCFStrategyView.xaml;Views\MainView.xaml;
 
 False
 

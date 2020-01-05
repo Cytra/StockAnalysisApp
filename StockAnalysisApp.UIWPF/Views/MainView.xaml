@@ -45,6 +45,7 @@
                Grid.ColumnSpan="3"
                HorizontalAlignment="Center"
                >STRATEGIES</Label>
+        <Button Grid.Row="3" Grid.Column="5" Command="{Binding GetCompanyKeyMetrics}">Key Metrics</Button>
         <Button Grid.Row="3" Grid.Column="7" Command="{Binding GetDCF}">DCF</Button>
 
         <DataGrid ItemsSource="{Binding SortedStocks}"

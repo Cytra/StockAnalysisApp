@@ -42,6 +42,11 @@ namespace StockAnalysisApp.UIWPF
 
                 cfg.CreateMap<DcfDto, Stock>()
                 .ForMember(dest => dest.DCF, org => org.MapFrom(source => source.DCF));
+
+                cfg.CreateMap<CompanyKeyMetricsMetricsDto, StockMetrics>();
+
+                cfg.CreateMap<CompanyKeyMetricsDto, Stock>()
+                .ForMember(dest => dest.Metrics, org => org.MapFrom(source => source.metrics));
             });
 
             _container.Instance(_container);
@@ -49,12 +54,18 @@ namespace StockAnalysisApp.UIWPF
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IWindowsLogger, ConsoleLogger>()
-                .Singleton<IStockListService,StockListService>()
-                .Singleton<IDCFService,DCFService>()
-                .Singleton<IStockSymbolService,StockSymbolService>()
+                .PerRequest<IStockListService,StockListService>()
+                .PerRequest<IDCFService,DCFService>()
+                .PerRequest<IStockSymbolService,StockSymbolService>()
+                .PerRequest<ICompanyKeyMetricsService, CompanyKeyMetricsService>()
+                //Facade
                 .PerRequest<IDcfFacade, DcfFacade>()
+                .PerRequest<ICompanyKeyMetricsFacade, CompanyKeyMetricsFacade>()
+                //Repo
                 .PerRequest<IDcfRepository, DcfRepository>()
-                .PerRequest<StockDbContext>()                
+                .PerRequest<StockDbContext>()   
+                //ViewModels
+                .PerRequest<CompanyKeyMetricsViewModel>()
                 .PerRequest<DCFStrategyViewModel>()
                 .PerRequest<MainViewModel>()
                 .RegisterInstance(

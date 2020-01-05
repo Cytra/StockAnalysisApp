@@ -15,4 +15,3 @@ C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysi
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.AssemblyInfo.cs
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.dll
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.pdb
-C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Core\obj\Debug\netstandard2.0\StockAnalysisApp.Core.csprojAssemblyReference.cache

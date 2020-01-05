@@ -583,3 +583,5 @@ C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysi
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\bin\Debug\Moq.xml
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\Views\DCFStrategyView.g.cs
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\Views\DCFStrategyView.baml
+C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\Views\CompanyKeyMetricsView.g.cs
+C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\Views\CompanyKeyMetricsView.baml

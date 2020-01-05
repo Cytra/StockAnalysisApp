@@ -55,8 +55,14 @@
                 <DataGridTextColumn Header="Diff" Binding="{Binding Diff}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>-->
-
-        <DataGrid ItemsSource="{Binding SortedDcfDtos}"
+        <Window:ProgressRing 
+            Grid.Row="5"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            IsActive="{Binding IsActive}"/>
+        
+        <DataGrid Visibility="{Binding DataGridVisibility}"
+                  ItemsSource="{Binding SortedDcfDtos}"
                   Grid.Row="5"
                   Grid.Column="1"
                   Grid.ColumnSpan="3"

@@ -107,6 +107,30 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                 SortList(value);
             }
         }
+
+        private bool _isActive = false;
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                OnPropertyChanged(nameof(IsActive));
+            }
+        }
+
+        private string _dataGridVisibility = "Visible";
+
+        public string DataGridVisibility
+        {
+            get { return _dataGridVisibility; }
+            set
+            {
+                _dataGridVisibility = value;
+                OnPropertyChanged(nameof(DataGridVisibility));
+            }
+        }
+
         public ICommand GetNewDCF { get; set; }
 
         public DCFStrategyViewModel(
@@ -117,6 +141,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             IDcfRepository dcfRepository
             )
         {
+            
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -128,10 +153,12 @@ namespace StockAnalysisApp.UIWPF.ViewModels
 
         private void ExcecuteGetNewDCF()
         {
+            
             Task.Run(async () =>
             {
                 try
                 {
+                    ToggleVisibility(true);
                     SymbolList = await _stockListService.GetStockList();
                     Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
                     await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
@@ -156,7 +183,12 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                 {
                     throw ex;
                 }
+                finally
+                {
+                    ToggleVisibility(false);
+                }
             });
+            
         }
 
         private void InitializeData()
@@ -170,12 +202,27 @@ namespace StockAnalysisApp.UIWPF.ViewModels
 
         private void SortList(string value)
         {
-            if(string.IsNullOrEmpty(value)){
+            if (string.IsNullOrEmpty(value))
+            {
                 SortedDcfDtos = DcfDtos;
             }
             SortedDcfDtos = DcfDtos
                 .Where(x => x.symbol.ToUpper().Contains(value.ToUpper()))
                 .ToList();
+        }
+
+        private void ToggleVisibility(bool spinning)
+        {
+            if (spinning)
+            {
+                IsActive = true;
+                DataGridVisibility = "Hidden";
+            }
+            else
+            {
+                IsActive = false;
+                DataGridVisibility = "Visible";
+            }
         }
 
         protected void OnPropertyChanged(string name)

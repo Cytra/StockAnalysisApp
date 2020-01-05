@@ -22,5 +22,7 @@ namespace StockAnalysisApp.Core.Model
                 return (double)(DCF / Price * 100);
             }
         }
+
+        public List<StockMetrics> Metrics { get; set; }
     }
 }

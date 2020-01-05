@@ -21,7 +21,7 @@ namespace StockAnalysisApp.UIWPF.Views
         private readonly IStockListService _stockListService;
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
-        private readonly IDCFService _dCFService;
+        private readonly CompanyKeyMetricsViewModel _companyKeyMetricsViewModel;
 
         public SymbolsList SymbolList { get; set; }
 
@@ -72,23 +72,33 @@ namespace StockAnalysisApp.UIWPF.Views
                 SortList(value);
             }
         }
+
         public DCFStrategyViewModel _dCFStrategyViewModel { get; set; }
         public ICommand GetDCF { get; set; }
+        public ICommand GetCompanyKeyMetrics { get; set; }
 
-        public MainViewModel(IStockListService stockListService, 
-            IMapper mapper, 
-            IWindowsLogger logger, 
-            IDCFService dCFService,
-            DCFStrategyViewModel dCFStrategyViewModel
+        public MainViewModel(IStockListService stockListService,
+            IMapper mapper,
+            IWindowsLogger logger,
+            DCFStrategyViewModel dCFStrategyViewModel,
+            CompanyKeyMetricsViewModel companyKeyMetricsViewModel
             )
         {
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _dCFService = dCFService ?? throw new ArgumentNullException(nameof(dCFService));
             _dCFStrategyViewModel = dCFStrategyViewModel ?? throw new ArgumentNullException(nameof(dCFStrategyViewModel));
+            _companyKeyMetricsViewModel = companyKeyMetricsViewModel ?? throw new ArgumentNullException(nameof(companyKeyMetricsViewModel));
             GetDCF = new DelegateCommand(ExecuteGetDCF);
+            GetCompanyKeyMetrics = new DelegateCommand(ExcecuteGetCompanyKeyMetrics);
             InitializeData();
+        }
+
+        private void ExcecuteGetCompanyKeyMetrics()
+        {
+            var companyKeyMetrics = new CompanyKeyMetricsView();
+            companyKeyMetrics.DataContext = _companyKeyMetricsViewModel;
+            companyKeyMetrics.Show();
         }
 
         private void ExecuteGetDCF()
