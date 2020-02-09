@@ -4,6 +4,7 @@ using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,11 +40,10 @@ namespace StockAnalysisApp.Services.ApiFacade
         public async Task<List<Stock>> RemoreDcfInRepo(List<Stock> stocks)
         {
             var dcfFromRepo = await _dcfRepository.GetDcfDto();
-            dcfFromRepo = dcfFromRepo.FindAll(x => x.date == DateTime.Today);
-
-            foreach (var dcf in dcfFromRepo)
+            var dcfFromRepoStrings = dcfFromRepo.FindAll(x => x.date == DateTime.Today).Select(x => x.symbol).Distinct().ToList();
+            foreach (var dcf in dcfFromRepoStrings)
             {
-                stocks.RemoveAll(x => x.Symbol == dcf.symbol);
+                stocks.RemoveAll(x => x.Symbol == dcf);
             }
             return stocks;
         }

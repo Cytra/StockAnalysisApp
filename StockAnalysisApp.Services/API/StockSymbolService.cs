@@ -2,6 +2,7 @@
 using StockAnalysisApp.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace StockAnalysisApp.Services.API
@@ -24,11 +25,14 @@ namespace StockAnalysisApp.Services.API
                 "INP", "JEM", "JRJR", "JXSB", "LEXEB",
                 "LOGO", "MIIIU", "ONG", "ORPN", "PFK",
                 "PTM", "RCOM", "SBV", "SFB", "STLRU",
-                "TIL", "UBC", "UBM"
+                "TIL", "UBC", "UBM", "HMY","MFGP","TS",
+                "NTR", "FRC", "TSM", "BBVA", "SAN",
+                "FWONK", "DRE", "AMX", "TMHC"
             };
 
         public List<string> GetStockListString(List<Stock> stocks, int frequancy)
         {
+            
             RemoveBannedStocks(stocks);
             var result = new List<string>();
             var currentStockList = string.Empty;

@@ -23,6 +23,8 @@
             <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
 
@@ -41,29 +43,25 @@
                  Grid.Column="3"
                  Text="{Binding StockTicker, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <!--<DataGrid ItemsSource="{Binding SortedStocks}"
-                  Grid.Row="5"
-                  Grid.Column="1"
-                  Grid.ColumnSpan="3"
-                  AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedStock}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Name}" Width="3*"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Symbol}" Width="*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
-                <DataGridTextColumn Header="DCF" Binding="{Binding DCF}" Width="*"/>
-                <DataGridTextColumn Header="Diff" Binding="{Binding Diff}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>-->
+        <Label Grid.Row="5"
+               Grid.Column="1">Date</Label>
+
+        <ComboBox 
+               Grid.Row="5"
+               Grid.Column="3"
+               ItemsSource="{Binding DateList, StringFormat=yyyy-MM-dd}"
+               SelectedValue="{Binding SelectedDate}"
+            ></ComboBox>
+        
         <Window:ProgressRing 
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.Column="1"
             Grid.ColumnSpan="3"
             IsActive="{Binding IsActive}"/>
         
         <DataGrid Visibility="{Binding DataGridVisibility}"
                   ItemsSource="{Binding SortedDcfDtos}"
-                  Grid.Row="5"
+                  Grid.Row="7"
                   Grid.Column="1"
                   Grid.ColumnSpan="3"
                   AutoGenerateColumns="False"

@@ -11,26 +11,35 @@ namespace StockAnalysisApp.Core.DTOs
         public string symbol { get; set; }
         public DateTime date { get; set; }
         [JsonProperty(PropertyName = "Stock Price")]
-        public double? StockPrice { get; set; }
-        public double? DCF { get; set; }
+        public double StockPrice { get; set; }
+        public double DCF { get; set; }
 
-        public double? Diff
+        public decimal Diff
         {
             get
             {
-                if (DCF == null)
-                {
-                    return null;
-                }
                 if (StockPrice == null)
                 {
-                    return null;
+                    return 0;
+                }
+                if (DCF == null)
+                {
+                    return 0;
                 }
                 if (DCF == 0)
                 {
-                    return null;
+                    return 0;
                 }
-                return (double)(StockPrice * 100 / DCF);
+                if (StockPrice == 0)
+                {
+                    return 0;
+                }
+
+                if (double.IsInfinity(DCF))
+                {
+                    return (decimal)(StockPrice * 100 / 99999999);
+                }
+                return (decimal)(StockPrice * 100 / DCF);
             }
         }
     }

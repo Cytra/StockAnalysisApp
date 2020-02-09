@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data.CustomEntityFramwork;
 
 namespace StockAnalysisApp.Data.DbContexts
 {
@@ -13,7 +14,8 @@ namespace StockAnalysisApp.Data.DbContexts
         public DbSet<Stock> Stocks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp;Trusted_Connection=True");
+            optionsBuilder
+                .UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp;Trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

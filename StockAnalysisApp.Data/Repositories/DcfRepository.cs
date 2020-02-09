@@ -7,35 +7,61 @@ using System.Text;
 using StockAnalysisApp.Core.DTOs;
 using System.Threading.Tasks;
 using System.Linq;
+using StockAnalysisApp.Logger.Loggers;
 
 namespace StockAnalysisApp.Data.Repositories
 {
     public class DcfRepository : IDcfRepository, IDisposable
     {
         public readonly StockDbContext _context;
+        private readonly IWindowsLogger _logger;
 
-        public DcfRepository(StockDbContext context)
+        public DcfRepository(StockDbContext context, IWindowsLogger logger)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void AddDcf(DcfDto dto)
         {
-            _context.Dcfs.Add(dto);
-            _context.SaveChanges();
+            try
+            {
+                _context.Dcfs.Add(dto);
+            }
+            catch (Exception ex)
+            {
+                ex.Data.Add(dto.Id, dto);
+                _logger.WriteError("Error saving DCF list to DB", ex);
+            }
         }
 
         public void AddDcfList(List<DcfDto> dcfs)
         {
-            foreach(var dcf in dcfs)
+            try
             {
-                var existingDcf = _context.Dcfs.FirstOrDefault(x => x.date == dcf.date && x.symbol == dcf.symbol);
-                if(existingDcf == null)
+                foreach (var dcf in dcfs)
                 {
-                    _context.Dcfs.Add(dcf);
+                    var existingDcf = _context.Dcfs.FirstOrDefault(x => x.date == dcf.date && x.symbol == dcf.symbol);
+                    if (existingDcf == null)
+                    {
+                        if (!double.IsNaN(dcf.DCF) && !double.IsNaN(dcf.StockPrice))
+                        {
+                            if(double.IsInfinity(dcf.DCF))
+                            {
+                                dcf.DCF = 999999999;
+                            }
+                            _logger.WriteInformation($"Saving dcf - {dcf.symbol}, {dcf.DCF}, {dcf.StockPrice}, {dcf.date}");
+                            AddDcf(dcf);
+                        }
+                    }
                 }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                _logger.WriteError("Error saving DCF list to DB", ex);
+            }
+            _logger.WriteInformation("Saved data to DB");
         }
 
         public async Task<List<DcfDto>> GetDcfDto()

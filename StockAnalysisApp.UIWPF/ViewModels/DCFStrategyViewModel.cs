@@ -104,7 +104,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             {
                 _stockTicker = value;
                 OnPropertyChanged(nameof(StockTicker));
-                SortList(value);
+                SortList();
             }
         }
 
@@ -131,6 +131,30 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             }
         }
 
+        public List<DateTime> DateList
+        {
+            get
+            {
+                if (DcfDtos != null)
+                {
+                    return DcfDtos.Select(x => x.date).Distinct().ToList();
+                }
+                return null;
+            }
+        }
+
+        private DateTime _selectedDate;
+        public DateTime SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                _selectedDate = value;
+                OnPropertyChanged(nameof(SelectedDate));
+                SortList();
+            }
+        }
+
         public ICommand GetNewDCF { get; set; }
 
         public DCFStrategyViewModel(
@@ -141,7 +165,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             IDcfRepository dcfRepository
             )
         {
-            
+
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -153,7 +177,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
 
         private void ExcecuteGetNewDCF()
         {
-            
+
             Task.Run(async () =>
             {
                 try
@@ -164,20 +188,6 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                     await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
                     DcfDtos = await _dcfRepository.GetDcfDto();
                     SortedDcfDtos = DcfDtos;
-
-                    //foreach (var stock in Stocks)
-                    //{
-                    //    if (Stocks.IndexOf(stock) > 100) break;
-                    //    var stockDcf = await _dCFService.GetDcf(stock.Symbol);
-                    //    _logger.WriteInformation(Stocks.IndexOf(stock).ToString());
-                    //    var stockWithDcf = _mapper.Map<DcfDto, Stock>(stockDcf, stock);
-                    //    if (stockWithDcf != null)
-                    //    {
-                    //        stocksWithDcf.Add(stockWithDcf);
-                    //    }
-                    //}
-
-                    //SortedStocks = stocksWithDcf;
                 }
                 catch (Exception ex)
                 {
@@ -188,7 +198,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                     ToggleVisibility(false);
                 }
             });
-            
+
         }
 
         private void InitializeData()
@@ -200,15 +210,25 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             });
         }
 
-        private void SortList(string value)
+        private void SortList()
         {
-            if (string.IsNullOrEmpty(value))
+
+            if (string.IsNullOrEmpty(StockTicker))
             {
                 SortedDcfDtos = DcfDtos;
             }
-            SortedDcfDtos = DcfDtos
-                .Where(x => x.symbol.ToUpper().Contains(value.ToUpper()))
+
+            if(DcfDtos != null && !string.IsNullOrEmpty(StockTicker))
+            {
+                SortedDcfDtos = DcfDtos
+                .Where(x => x.symbol.ToUpper().Contains(StockTicker.ToUpper()))
                 .ToList();
+            }
+
+            if (SelectedDate != null)
+            {
+                SortedDcfDtos = SortedDcfDtos.Where(x => x.date == SelectedDate).ToList();
+            }
         }
 
         private void ToggleVisibility(bool spinning)

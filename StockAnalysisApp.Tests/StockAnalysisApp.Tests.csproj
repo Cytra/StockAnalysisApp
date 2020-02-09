@@ -26,6 +26,7 @@
     </PackageReference>
     <PackageReference Include="NUnitTestAdapter" Version="2.2.0" />
     <PackageReference Include="NUnitTestAdapter.WithFramework" Version="2.0.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>

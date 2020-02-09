@@ -22,3 +22,14 @@ C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysi
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.csproj.CopyComplete
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.dll
 C:\Users\Cytra\Desktop\CSharpApps\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.pdb
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\bin\Debug\netstandard2.0\StockAnalysisApp.Logger.deps.json
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\bin\Debug\netstandard2.0\StockAnalysisApp.Logger.dll
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\bin\Debug\netstandard2.0\StockAnalysisApp.Logger.pdb
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\bin\Debug\netstandard2.0\StockAnalysisApp.Core.dll
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\bin\Debug\netstandard2.0\StockAnalysisApp.Core.pdb
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.csprojAssemblyReference.cache
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.AssemblyInfoInputs.cache
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.AssemblyInfo.cs
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.csproj.CopyComplete
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.dll
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.Logger\obj\Debug\netstandard2.0\StockAnalysisApp.Logger.pdb
