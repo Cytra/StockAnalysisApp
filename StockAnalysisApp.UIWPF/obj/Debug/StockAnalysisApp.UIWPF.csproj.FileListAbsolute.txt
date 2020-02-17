@@ -881,7 +881,6 @@ C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\Views\MainView.g.cs
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\App.g.cs
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF_Content.g.cs
-C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF_MarkupCompile.cache
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF_MarkupCompile.lref
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\App.baml
@@ -894,3 +893,4 @@ C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF.csproj.CopyComplete
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF.exe
 C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\StockAnalysisApp.UIWPF.pdb
+C:\Users\Cytra\Desktop\stockAnalysisApp\StockAnalysisApp\StockAnalysisApp.UIWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs

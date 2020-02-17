@@ -10,8 +10,8 @@ using StockAnalysisApp.Data.DbContexts;
 namespace StockAnalysisApp.Data.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20200209234020_Init")]
-    partial class Init
+    [Migration("20200217193930_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

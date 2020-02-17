@@ -185,7 +185,6 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                     ToggleVisibility(true);
                     SymbolList = await _stockListService.GetStockList();
                     Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
-                    await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
                     DcfDtos = await _dcfRepository.GetDcfDto();
                     SortedDcfDtos = DcfDtos;
                 }

@@ -5,9 +5,130 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StockAnalysisApp.UIWPF.Views"
         mc:Ignorable="d"
-        Title="CompanyKeyMetricsView" Height="450" Width="800"
+        Title="CompanyKeyMetricsView" Height="800" Width="1200"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1"
+               Grid.Column="1">Stock Ticker</Label>
+
+        <TextBox Grid.Row="1"
+                 Grid.Column="3"
+                 Text="{Binding StockTicker, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <Button Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="3" 
+                Command="{Binding Prepare}">GET KEY METRICS</Button>
+
+        <DataGrid ItemsSource="{Binding StockKeyMetrics.Metrics}"
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="7"
+                  AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=yyyy-MM-dd}" Width="*"/>
+                <DataGridTextColumn Header="RpShr" Binding="{Binding RevenueperShare}" Width="*"/>
+                <DataGridTextColumn Header="NetIncomeperShare" Binding="{Binding NetIncomeperShare}" Width="*"/>
+                <DataGridTextColumn Header="OperatingCashFlowperShare" Binding="{Binding OperatingCashFlowperShare}" Width="*"/>
+                <DataGridTextColumn Header="FreeCashFlowperShare" Binding="{Binding FreeCashFlowperShare}" Width="*"/>
+                <DataGridTextColumn Header="CashperShare" Binding="{Binding CashperShare}" Width="*"/>
+                <DataGridTextColumn Header="BookValueperShare" Binding="{Binding BookValueperShare}" Width="*"/>
+                <DataGridTextColumn Header="TangibleBookValueperShare" Binding="{Binding TangibleBookValueperShare}" Width="*"/>
+                <DataGridTextColumn Header="ShareholdersEquityperShare" Binding="{Binding ShareholdersEquityperShare}" Width="*"/>
+                <DataGridTextColumn Header="InterestDebtperShare" Binding="{Binding InterestDebtperShare}" Width="*"/>
+                <DataGridTextColumn Header="MarketCap" Binding="{Binding MarketCap, StringFormat={}{0:#,##0,,M}}" Width="*"/>
+                <DataGridTextColumn Header="EnterpriseValue" Binding="{Binding EnterpriseValue, StringFormat={}{0:#,##0,,M}}" Width="*"/>
+                <DataGridTextColumn Header="PEratio" Binding="{Binding PEratio}" Width="*"/>
+                <DataGridTextColumn Header="PricetoSalesRatio" Binding="{Binding PricetoSalesRatio}" Width="*"/>
+                <DataGridTextColumn Header="POCFratio" Binding="{Binding POCFratio}" Width="*"/>
+                <DataGridTextColumn Header="PFCFratio" Binding="{Binding PFCFratio}" Width="*"/>
+                <DataGridTextColumn Header="PBratio" Binding="{Binding PBratio}" Width="*"/>
+                <DataGridTextColumn Header="PTBratio" Binding="{Binding PTBratio}" Width="*"/>
+                <DataGridTextColumn Header="EVtoSales" Binding="{Binding EVtoSales}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid ItemsSource="{Binding StockKeyMetrics.Metrics}"
+                  Grid.Row="4"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="7"
+                  AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=yyyy-MM-dd}" Width="*"/>
+                <DataGridTextColumn Header="EnterpriseValueoverEBITDA" Binding="{Binding EnterpriseValueoverEBITDA}" Width="*"/>
+                <DataGridTextColumn Header="EVtoOperatingcashflow" Binding="{Binding EVtoOperatingcashflow}" Width="*"/>
+                <DataGridTextColumn Header="EVtoFreecashflow" Binding="{Binding EVtoFreecashflow}" Width="*"/>
+                <DataGridTextColumn Header="EarningsYield" Binding="{Binding EarningsYield}" Width="*"/>
+                <DataGridTextColumn Header="FreeCashFlowYield" Binding="{Binding FreeCashFlowYield}" Width="*"/>
+                <DataGridTextColumn Header="DebttoEquity" Binding="{Binding DebttoEquity}" Width="*"/>
+                <DataGridTextColumn Header="DebttoAssets" Binding="{Binding DebttoAssets}" Width="*"/>
+                <DataGridTextColumn Header="NetDebttoEBITDA" Binding="{Binding NetDebttoEBITDA}" Width="*"/>
+                <DataGridTextColumn Header="Currentratio" Binding="{Binding Currentratio}" Width="*"/>
+                <DataGridTextColumn Header="InterestCoverage" Binding="{Binding InterestCoverage}" Width="*"/>
+                <DataGridTextColumn Header="IncomeQuality" Binding="{Binding IncomeQuality}" Width="*"/>
+                <DataGridTextColumn Header="DividendYield" Binding="{Binding DividendYield}" Width="*"/>
+                <DataGridTextColumn Header="PayoutRatio" Binding="{Binding PayoutRatio}" Width="*"/>
+                <DataGridTextColumn Header="SGAtoRevenue" Binding="{Binding SGAtoRevenue}" Width="*"/>
+                <DataGridTextColumn Header="RDtoRevenue" Binding="{Binding RDtoRevenue}" Width="*"/>
+                <DataGridTextColumn Header="IntangiblestoTotalAssets" Binding="{Binding IntangiblestoTotalAssets}" Width="*"/>
+                <DataGridTextColumn Header="CapextoOperatingCashFlow" Binding="{Binding CapextoOperatingCashFlow}" Width="*"/>
+                <DataGridTextColumn Header="CapextoRevenue" Binding="{Binding CapextoRevenue}" Width="*"/>
+                <DataGridTextColumn Header="CapextoDepreciation" Binding="{Binding CapextoDepreciation}" Width="*"/>
+                <DataGridTextColumn Header="StockbasedcompensationtoRevenue" Binding="{Binding StockbasedcompensationtoRevenue}" Width="*"/>
+                <DataGridTextColumn Header="GrahamNumber" Binding="{Binding GrahamNumber}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid ItemsSource="{Binding StockKeyMetrics.Metrics}"
+                  Grid.Row="5"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="7"
+                  AutoGenerateColumns="false">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=yyyy-MM-dd}" Width="*"/>
+                <DataGridTextColumn Header="ROIC" Binding="{Binding ROIC}" Width="*"/>
+                <DataGridTextColumn Header="ReturnonTangibleAssets" Binding="{Binding ReturnonTangibleAssets}" Width="*"/>
+                <DataGridTextColumn Header="GrahamNetNet" Binding="{Binding GrahamNetNet}" Width="*"/>
+                <DataGridTextColumn Header="WorkingCapital" Binding="{Binding WorkingCapital}" Width="*"/>
+                <DataGridTextColumn Header="TangibleAssetValue" Binding="{Binding TangibleAssetValue}" Width="*"/>
+                <DataGridTextColumn Header="NetCurrentAssetValue" Binding="{Binding NetCurrentAssetValue}" Width="*"/>
+                <DataGridTextColumn Header="InvestedCapital" Binding="{Binding InvestedCapital}" Width="*"/>
+                <DataGridTextColumn Header="AverageReceivables" Binding="{Binding AverageReceivables}" Width="*"/>
+                <DataGridTextColumn Header="AveragePayables" Binding="{Binding AveragePayables}" Width="*"/>
+                <DataGridTextColumn Header="AverageInventory" Binding="{Binding AverageInventory}" Width="*"/>
+                <DataGridTextColumn Header="DaysSalesOutstanding" Binding="{Binding DaysSalesOutstanding}" Width="*"/>
+                <DataGridTextColumn Header="DaysPayablesOutstanding" Binding="{Binding DaysPayablesOutstanding}" Width="*"/>
+                <DataGridTextColumn Header="DaysofInventoryonHand" Binding="{Binding DaysofInventoryonHand}" Width="*"/>
+                <DataGridTextColumn Header="ReceivablesTurnover" Binding="{Binding ReceivablesTurnover}" Width="*"/>
+                <DataGridTextColumn Header="PayablesTurnover" Binding="{Binding PayablesTurnover}" Width="*"/>
+                <DataGridTextColumn Header="ReceivablesTurnover" Binding="{Binding ReceivablesTurnover}" Width="*"/>
+                <DataGridTextColumn Header="ROE" Binding="{Binding ROE}" Width="*"/>
+                <DataGridTextColumn Header="CapexperShare" Binding="{Binding CapexperShare}" Width="*"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
+
+    
 </Window>

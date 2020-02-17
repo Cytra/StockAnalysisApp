@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -21,6 +22,7 @@ namespace StockAnalysisApp.UIWPF.Views
         private readonly IStockListService _stockListService;
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
+        private readonly IDcfFacade _dCFfacade;
         private readonly CompanyKeyMetricsViewModel _companyKeyMetricsViewModel;
 
         public SymbolsList SymbolList { get; set; }
@@ -76,10 +78,38 @@ namespace StockAnalysisApp.UIWPF.Views
         public DCFStrategyViewModel _dCFStrategyViewModel { get; set; }
         public ICommand GetDCF { get; set; }
         public ICommand GetCompanyKeyMetrics { get; set; }
+        public ICommand Prepare { get; set; }
 
-        public MainViewModel(IStockListService stockListService,
+        private bool _isActive = false;
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                OnPropertyChanged(nameof(IsActive));
+            }
+        }
+
+        private string _dataGridVisibility = "Visible";
+
+        public string DataGridVisibility
+        {
+            get { return _dataGridVisibility; }
+            set
+            {
+                _dataGridVisibility = value;
+                OnPropertyChanged(nameof(DataGridVisibility));
+            }
+        }
+
+
+        public MainViewModel(
+            IStockListService stockListService,
             IMapper mapper,
             IWindowsLogger logger,
+            IDcfFacade dCFfacade,
             DCFStrategyViewModel dCFStrategyViewModel,
             CompanyKeyMetricsViewModel companyKeyMetricsViewModel
             )
@@ -87,11 +117,34 @@ namespace StockAnalysisApp.UIWPF.Views
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dCFfacade = dCFfacade ?? throw new ArgumentNullException(nameof(dCFfacade));
             _dCFStrategyViewModel = dCFStrategyViewModel ?? throw new ArgumentNullException(nameof(dCFStrategyViewModel));
             _companyKeyMetricsViewModel = companyKeyMetricsViewModel ?? throw new ArgumentNullException(nameof(companyKeyMetricsViewModel));
             GetDCF = new DelegateCommand(ExecuteGetDCF);
             GetCompanyKeyMetrics = new DelegateCommand(ExcecuteGetCompanyKeyMetrics);
+            Prepare = new DelegateCommand(ExcecutePrepare);
             InitializeData();
+        }
+
+        private void ExcecutePrepare()
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    SymbolList = await _stockListService.GetStockList();
+                    await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
+                    ToggleVisibility(true);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    ToggleVisibility(false);
+                }
+            });
         }
 
         private void ExcecuteGetCompanyKeyMetrics()
@@ -128,8 +181,24 @@ namespace StockAnalysisApp.UIWPF.Views
         private void SortList(string value)
         {
             SortedStocks = Stocks
+                .Where(x => x.Name != null)
+                .Where(x => x.Symbol != null)
                 .Where(x => x.Symbol.ToUpper().Contains(value.ToUpper()) || x.Name.ToUpper().Contains(value.ToUpper()))
                 .ToList();
+        }
+
+        private void ToggleVisibility(bool spinning)
+        {
+            if (spinning)
+            {
+                IsActive = true;
+                DataGridVisibility = "Hidden";
+            }
+            else
+            {
+                IsActive = false;
+                DataGridVisibility = "Visible";
+            }
         }
 
         protected void OnPropertyChanged(string name)

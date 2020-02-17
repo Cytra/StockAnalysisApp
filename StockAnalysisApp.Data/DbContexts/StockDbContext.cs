@@ -15,7 +15,7 @@ namespace StockAnalysisApp.Data.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp;Trusted_Connection=True");
+                .UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp2;Trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
