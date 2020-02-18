@@ -71,8 +71,8 @@
                   SelectedItem="{Binding SelectedStock}"
                   Visibility="{Binding DataGridVisibility}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Name}" Width="3*"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Symbol}" Width="*"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="3*"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="*"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

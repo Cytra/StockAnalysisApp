@@ -62,6 +62,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         {
             Task.Run(async () =>
             {
+
                 StockKeyMetrics = await _companyKeyMetricsFacade.GetStockWithKeyMetrics(new Stock() { Symbol = StockTicker });
             });
             

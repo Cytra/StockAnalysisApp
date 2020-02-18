@@ -10,19 +10,9 @@ namespace StockAnalysisApp.Core.Model
         public string Symbol { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public double DCF { get; set; }
-        public double Diff
-        {
-            get
-            {
-                if (Price == 0)
-                {
-                    return 0;
-                }
-                return (double)(DCF / Price * 100);
-            }
-        }
-
-        public List<StockMetrics> Metrics { get; set; }
+        public DateTime Date { get; set; } = DateTime.Today;
+        public List<StockMetrics> Metrics { get; set; } = new List<StockMetrics>();
+        public StockRating StockRating { get; set; } = new StockRating();
+        public Dcf Dcf { get; set; } = new Dcf();
     }
 }

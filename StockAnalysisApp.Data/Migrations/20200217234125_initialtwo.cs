@@ -3,24 +3,55 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StockAnalysisApp.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class initialtwo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Dcf",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Symbol = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    StockPrice = table.Column<double>(nullable: false),
+                    DCF = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dcf", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Dcfs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    symbol = table.Column<string>(nullable: true),
-                    date = table.Column<DateTime>(nullable: false),
+                    Symbol = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
                     StockPrice = table.Column<double>(nullable: false),
                     DCF = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dcfs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockRating",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Score = table.Column<int>(nullable: false),
+                    Rating = table.Column<string>(nullable: true),
+                    Recommendation = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockRating", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,11 +63,26 @@ namespace StockAnalysisApp.Data.Migrations
                     Symbol = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
-                    DCF = table.Column<double>(nullable: false)
+                    DCF = table.Column<double>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    StockRatingId = table.Column<int>(nullable: true),
+                    DcfId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stocks_Dcf_DcfId",
+                        column: x => x.DcfId,
+                        principalTable: "Dcf",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Stocks_StockRating_StockRatingId",
+                        column: x => x.StockRatingId,
+                        principalTable: "StockRating",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +166,16 @@ namespace StockAnalysisApp.Data.Migrations
                 name: "IX_StockMetrics_StockId",
                 table: "StockMetrics",
                 column: "StockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stocks_DcfId",
+                table: "Stocks",
+                column: "DcfId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stocks_StockRatingId",
+                table: "Stocks",
+                column: "StockRatingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -132,6 +188,12 @@ namespace StockAnalysisApp.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Stocks");
+
+            migrationBuilder.DropTable(
+                name: "Dcf");
+
+            migrationBuilder.DropTable(
+                name: "StockRating");
         }
     }
 }

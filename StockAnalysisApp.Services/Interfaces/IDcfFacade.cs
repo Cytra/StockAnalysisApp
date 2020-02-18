@@ -10,7 +10,6 @@ namespace StockAnalysisApp.Services.Interfaces
     public interface IDcfFacade
     {
         Task<List<Stock>> RemoreDcfInRepo(List<Stock> stocks);
-        Task<List<DcfDto>> GetDcfListWithBulkOrder(List<Stock> stocks);
-        Task<List<DcfDto>> GetDcfList(List<Stock> stocks);
+        Task<List<Stock>> GetDcfListWithBulkOrder(List<Stock> stocks);
     }
 }

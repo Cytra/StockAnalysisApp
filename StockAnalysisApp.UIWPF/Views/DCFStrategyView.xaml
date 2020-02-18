@@ -60,18 +60,19 @@
             IsActive="{Binding IsActive}"/>
         
         <DataGrid Visibility="{Binding DataGridVisibility}"
-                  ItemsSource="{Binding SortedDcfDtos}"
+                  ItemsSource="{Binding Stocks}"
                   Grid.Row="7"
                   Grid.Column="1"
                   Grid.ColumnSpan="3"
-                  AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedDcfDto}">
+                  AutoGenerateColumns="false"
+                  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding symbol}" Width="*"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding date, StringFormat=yyyy-MM-dd}" Width="*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding StockPrice, StringFormat={}{0:#,#.00}}" Width="*"/>
-                <DataGridTextColumn Header="DCF" Binding="{Binding DCF, StringFormat={}{0:#,#.00}}" Width="*"/>
-                <DataGridTextColumn Header="Diff" Binding="{Binding Diff, StringFormat={}{0:#,#.00}}" Width="*"/>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="*"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Dcf.StockPrice, StringFormat={}{0:#,#.00}}" Width="*"/>
+                <DataGridTextColumn Header="DCF" Binding="{Binding Dcf.DCF}" Width="*"/>
+                <DataGridTextColumn Header="Diff" Binding="{Binding Dcf.Diff}" Width="*"/>
+                <DataGridTextColumn Header="Score" Binding="{Binding StockRating.Score}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

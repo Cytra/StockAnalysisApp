@@ -41,7 +41,7 @@ namespace StockAnalysisApp.Data.Repositories
             {
                 foreach (var dcf in dcfs)
                 {
-                    var existingDcf = _context.Dcfs.FirstOrDefault(x => x.date == dcf.date && x.symbol == dcf.symbol);
+                    var existingDcf = _context.Dcfs.FirstOrDefault(x => x.Date == dcf.Date && x.Symbol == dcf.Symbol);
                     if (existingDcf == null)
                     {
                         if (!double.IsNaN(dcf.DCF) && !double.IsNaN(dcf.StockPrice))
@@ -50,7 +50,7 @@ namespace StockAnalysisApp.Data.Repositories
                             {
                                 dcf.DCF = 999999999;
                             }
-                            _logger.WriteInformation($"Saving dcf - {dcf.symbol}, {dcf.DCF}, {dcf.StockPrice}, {dcf.date}");
+                            _logger.WriteInformation($"Saving dcf - {dcf.Symbol}, {dcf.DCF}, {dcf.StockPrice}, {dcf.Date}");
                             AddDcf(dcf);
                         }
                     }

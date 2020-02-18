@@ -40,13 +40,17 @@ namespace StockAnalysisApp.UIWPF
                 .ForMember(dest => dest.Price, org => org.MapFrom(source => source.price))
                 .ForMember(dest => dest.Symbol, org => org.MapFrom(source => source.symbol));
 
-                cfg.CreateMap<DcfDto, Stock>()
-                .ForMember(dest => dest.DCF, org => org.MapFrom(source => source.DCF));
-
                 cfg.CreateMap<CompanyKeyMetricsMetricsDto, StockMetrics>();
 
                 cfg.CreateMap<CompanyKeyMetricsDto, Stock>()
                 .ForMember(dest => dest.Metrics, org => org.MapFrom(source => source.metrics));
+
+                cfg.CreateMap<RatingDto, StockRating>();
+
+                cfg.CreateMap<CompanyRatingDto, Stock>()
+                .ForMember(desc => desc.StockRating, org => org.MapFrom(source => source.Rating));
+
+                cfg.CreateMap<DcfDto, Dcf>();
             });
 
             _container.Instance(_container);
@@ -56,13 +60,17 @@ namespace StockAnalysisApp.UIWPF
                 .Singleton<IWindowsLogger, ConsoleLogger>()
                 .PerRequest<IStockListService,StockListService>()
                 .PerRequest<IDCFService,DCFService>()
+                .PerRequest<ICompanyRatingService, CompanyRatingService>()
                 .PerRequest<IStockSymbolService,StockSymbolService>()
                 .PerRequest<ICompanyKeyMetricsService, CompanyKeyMetricsService>()
                 //Facade
                 .PerRequest<IDcfFacade, DcfFacade>()
                 .PerRequest<ICompanyKeyMetricsFacade, CompanyKeyMetricsFacade>()
+                .PerRequest<ICompanyRatingFacade, CompanyRatingFacade>()
+                .PerRequest<IStockListFacade, StockListFacade>()
                 //Repo
                 .PerRequest<IDcfRepository, DcfRepository>()
+                .PerRequest<IStockRepository, StockRepository>()
                 .PerRequest<StockDbContext>()   
                 //ViewModels
                 .PerRequest<CompanyKeyMetricsViewModel>()

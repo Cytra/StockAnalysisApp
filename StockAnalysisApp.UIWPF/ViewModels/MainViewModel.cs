@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Logger.Loggers;
 using StockAnalysisApp.Services.Interfaces;
 using StockAnalysisApp.UIWPF.ViewModels;
@@ -19,10 +20,13 @@ namespace StockAnalysisApp.UIWPF.Views
     public class MainViewModel : PropertyChangedBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private readonly IStockListService _stockListService;
+
+        private readonly IStockRepository _stockRepository;
+        private readonly IStockListFacade _stockListFacade;
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
         private readonly IDcfFacade _dCFfacade;
+        private readonly ICompanyRatingFacade _companyRatingFacade;
         private readonly CompanyKeyMetricsViewModel _companyKeyMetricsViewModel;
 
         public SymbolsList SymbolList { get; set; }
@@ -93,7 +97,6 @@ namespace StockAnalysisApp.UIWPF.Views
         }
 
         private string _dataGridVisibility = "Visible";
-
         public string DataGridVisibility
         {
             get { return _dataGridVisibility; }
@@ -106,18 +109,22 @@ namespace StockAnalysisApp.UIWPF.Views
 
 
         public MainViewModel(
-            IStockListService stockListService,
+            IStockRepository stockRepository,
+            IStockListFacade stockListFacade,
             IMapper mapper,
             IWindowsLogger logger,
             IDcfFacade dCFfacade,
+            ICompanyRatingFacade companyRatingFacade,
             DCFStrategyViewModel dCFStrategyViewModel,
             CompanyKeyMetricsViewModel companyKeyMetricsViewModel
             )
         {
-            _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
+            _stockRepository = stockRepository ?? throw new ArgumentNullException(nameof(stockRepository));
+            _stockListFacade = stockListFacade ?? throw new ArgumentNullException(nameof(stockRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dCFfacade = dCFfacade ?? throw new ArgumentNullException(nameof(dCFfacade));
+            _companyRatingFacade = companyRatingFacade ?? throw new ArgumentNullException(nameof(companyRatingFacade));
             _dCFStrategyViewModel = dCFStrategyViewModel ?? throw new ArgumentNullException(nameof(dCFStrategyViewModel));
             _companyKeyMetricsViewModel = companyKeyMetricsViewModel ?? throw new ArgumentNullException(nameof(companyKeyMetricsViewModel));
             GetDCF = new DelegateCommand(ExecuteGetDCF);
@@ -132,8 +139,11 @@ namespace StockAnalysisApp.UIWPF.Views
             {
                 try
                 {
-                    SymbolList = await _stockListService.GetStockList();
-                    await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
+                    Stocks = await _stockListFacade.GetStockList();
+                    SortedStocks = Stocks;
+                    //await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
+                    //await _companyRatingFacade.GetStocksWithRatings(Stocks);
+
                     ToggleVisibility(true);
                 }
                 catch (Exception ex)
@@ -167,8 +177,7 @@ namespace StockAnalysisApp.UIWPF.Views
             {
                 try
                 {
-                    SymbolList = await _stockListService.GetStockList();
-                    Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
+                    Stocks = await _stockRepository.GetStocks();
                     SortedStocks = Stocks;
                 }
                 catch (Exception ex)
@@ -180,11 +189,14 @@ namespace StockAnalysisApp.UIWPF.Views
 
         private void SortList(string value)
         {
-            SortedStocks = Stocks
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                SortedStocks = Stocks
                 .Where(x => x.Name != null)
                 .Where(x => x.Symbol != null)
                 .Where(x => x.Symbol.ToUpper().Contains(value.ToUpper()) || x.Name.ToUpper().Contains(value.ToUpper()))
                 .ToList();
+            }
         }
 
         private void ToggleVisibility(bool spinning)

@@ -22,7 +22,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
         private readonly IDcfFacade _dCFfacade;
-        private readonly IDcfRepository _dcfRepository;
+        private readonly IStockRepository _stockRepo;
 
         public SymbolsList SymbolList { get; set; }
 
@@ -62,38 +62,38 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             }
         }
 
-        private List<DcfDto> _sorteddcfDtos;
-        public List<DcfDto> SortedDcfDtos
-        {
-            get { return _sorteddcfDtos; }
-            set
-            {
-                _sorteddcfDtos = value;
-                OnPropertyChanged(nameof(SortedDcfDtos));
-            }
-        }
+        //private List<DcfDto> _sorteddcfDtos;
+        //public List<DcfDto> SortedDcfDtos
+        //{
+        //    get { return _sorteddcfDtos; }
+        //    set
+        //    {
+        //        _sorteddcfDtos = value;
+        //        OnPropertyChanged(nameof(SortedDcfDtos));
+        //    }
+        //}
 
-        private DcfDto _selectedDcfDto;
-        public DcfDto SelectedDcfDto
-        {
-            get { return _selectedDcfDto; }
-            set
-            {
-                _selectedDcfDto = value;
-                OnPropertyChanged(nameof(SelectedDcfDto));
-            }
-        }
+        //private DcfDto _selectedDcfDto;
+        //public DcfDto SelectedDcfDto
+        //{
+        //    get { return _selectedDcfDto; }
+        //    set
+        //    {
+        //        _selectedDcfDto = value;
+        //        OnPropertyChanged(nameof(SelectedDcfDto));
+        //    }
+        //}
 
-        private List<DcfDto> _dcfDtos;
-        public List<DcfDto> DcfDtos
-        {
-            get { return _dcfDtos; }
-            set
-            {
-                _dcfDtos = value;
-                OnPropertyChanged(nameof(SelectedStock));
-            }
-        }
+        //private List<DcfDto> _dcfDtos;
+        //public List<DcfDto> DcfDtos
+        //{
+        //    get { return _dcfDtos; }
+        //    set
+        //    {
+        //        _dcfDtos = value;
+        //        OnPropertyChanged(nameof(SelectedStock));
+        //    }
+        //}
 
 
         private string _stockTicker;
@@ -135,9 +135,9 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         {
             get
             {
-                if (DcfDtos != null)
+                if (Stocks != null)
                 {
-                    return DcfDtos.Select(x => x.date).Distinct().ToList();
+                    return Stocks.Select(x => x.Date).Distinct().ToList();
                 }
                 return null;
             }
@@ -162,7 +162,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             IMapper mapper,
             IWindowsLogger logger,
             IDcfFacade dCFfacade,
-            IDcfRepository dcfRepository
+            IStockRepository stockRepo
             )
         {
 
@@ -170,7 +170,7 @@ namespace StockAnalysisApp.UIWPF.ViewModels
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dCFfacade = dCFfacade ?? throw new ArgumentNullException(nameof(dCFfacade));
-            _dcfRepository = dcfRepository ?? throw new ArgumentNullException(nameof(dcfRepository));
+            _stockRepo = stockRepo ?? throw new ArgumentNullException(nameof(stockRepo));
             GetNewDCF = new DelegateCommand(ExcecuteGetNewDCF);
             InitializeData();
         }
@@ -183,10 +183,11 @@ namespace StockAnalysisApp.UIWPF.ViewModels
                 try
                 {
                     ToggleVisibility(true);
-                    SymbolList = await _stockListService.GetStockList();
-                    Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
-                    DcfDtos = await _dcfRepository.GetDcfDto();
-                    SortedDcfDtos = DcfDtos;
+                    Stocks = await _stockRepo.GetStocks();
+                    //SymbolList = await _stockListService.GetStockList();
+                    //Stocks = _mapper.Map<List<Stock>>(SymbolList.symbolsList);
+                    //DcfDtos = await _stockRepo.GetDcfDto();
+                    //SortedDcfDtos = DcfDtos;
                 }
                 catch (Exception ex)
                 {
@@ -204,30 +205,30 @@ namespace StockAnalysisApp.UIWPF.ViewModels
         {
             Task.Run(async () =>
             {
-                DcfDtos = await _dcfRepository.GetDcfDto();
-                SortedDcfDtos = DcfDtos;
+                Stocks = await _stockRepo.GetStocks();
+                SortedStocks = Stocks;
             });
         }
 
         private void SortList()
         {
 
-            if (string.IsNullOrEmpty(StockTicker))
-            {
-                SortedDcfDtos = DcfDtos;
-            }
+            //if (string.IsNullOrEmpty(StockTicker))
+            //{
+            //    SortedDcfDtos = DcfDtos;
+            //}
 
-            if(DcfDtos != null && !string.IsNullOrEmpty(StockTicker))
-            {
-                SortedDcfDtos = DcfDtos
-                .Where(x => x.symbol.ToUpper().Contains(StockTicker.ToUpper()))
-                .ToList();
-            }
+            //if(DcfDtos != null && !string.IsNullOrEmpty(StockTicker))
+            //{
+            //    SortedDcfDtos = DcfDtos
+            //    .Where(x => x.Symbol.ToUpper().Contains(StockTicker.ToUpper()))
+            //    .ToList();
+            //}
 
-            if (SelectedDate != null)
-            {
-                SortedDcfDtos = SortedDcfDtos.Where(x => x.date == SelectedDate).ToList();
-            }
+            //if (SelectedDate != null)
+            //{
+            //    SortedDcfDtos = SortedDcfDtos.Where(x => x.Date == SelectedDate).ToList();
+            //}
         }
 
         private void ToggleVisibility(bool spinning)

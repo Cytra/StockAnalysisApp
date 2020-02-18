@@ -10,8 +10,8 @@ using StockAnalysisApp.Data.DbContexts;
 namespace StockAnalysisApp.Data.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20200217193930_initial")]
-    partial class initial
+    [Migration("20200218134901_stocklistFacade")]
+    partial class stocklistFacade
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,13 +31,13 @@ namespace StockAnalysisApp.Data.Migrations
                     b.Property<double>("DCF")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("StockPrice")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("symbol")
+                    b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -45,7 +45,7 @@ namespace StockAnalysisApp.Data.Migrations
                     b.ToTable("Dcfs");
                 });
 
-            modelBuilder.Entity("StockAnalysisApp.Core.Model.Stock", b =>
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.Dcf", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,16 +55,50 @@ namespace StockAnalysisApp.Data.Migrations
                     b.Property<double>("DCF")
                         .HasColumnType("float");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<double>("Price")
+                    b.Property<double>("StockPrice")
                         .HasColumnType("float");
 
                     b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.ToTable("Dcf");
+                });
+
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.Stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DcfId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("StockRatingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Symbol")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DcfId");
+
+                    b.HasIndex("StockRatingId");
 
                     b.ToTable("Stocks");
                 });
@@ -258,6 +292,38 @@ namespace StockAnalysisApp.Data.Migrations
                     b.HasIndex("StockId");
 
                     b.ToTable("StockMetrics");
+                });
+
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.StockRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Rating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Recommendation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StockRating");
+                });
+
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.Stock", b =>
+                {
+                    b.HasOne("StockAnalysisApp.Core.Model.Dcf", "Dcf")
+                        .WithMany()
+                        .HasForeignKey("DcfId");
+
+                    b.HasOne("StockAnalysisApp.Core.Model.StockRating", "StockRating")
+                        .WithMany()
+                        .HasForeignKey("StockRatingId");
                 });
 
             modelBuilder.Entity("StockAnalysisApp.Core.Model.StockMetrics", b =>
