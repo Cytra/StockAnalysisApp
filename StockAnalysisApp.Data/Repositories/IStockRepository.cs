@@ -10,7 +10,7 @@ namespace StockAnalysisApp.Data.Repositories
     {
         Task SaveStocks(List<Stock> stocks);
         Task AddStock(Stock stock);
-        Task UpdateStock(Stock stock, int id);
+        Task UpdateStock(Stock stock, Stock existingStock);
         Task<List<Stock>> GetStocks();
     }
 }

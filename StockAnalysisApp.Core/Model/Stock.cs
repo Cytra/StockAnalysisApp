@@ -14,5 +14,6 @@ namespace StockAnalysisApp.Core.Model
         public List<StockMetrics> Metrics { get; set; } = new List<StockMetrics>();
         public StockRating StockRating { get; set; } = new StockRating();
         public Dcf Dcf { get; set; } = new Dcf();
+
     }
 }

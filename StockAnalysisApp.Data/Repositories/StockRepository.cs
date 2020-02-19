@@ -30,15 +30,15 @@ namespace StockAnalysisApp.Data.Repositories
                     if (existingStock == null)
                     {
                         ValidateStockDcf(stock);
-                        _logger.WriteInformation($"Saving stock {stocks.IndexOf(stock)} / {stocks.Count} : {stock.Symbol}");
                         await AddStock(stock);
-                    } else
+                    }
+                    else
                     {
                         ValidateStockDcf(stock);
-                        _logger.WriteInformation($"SUpdating stock {stocks.IndexOf(stock)} / {stocks.Count} : {stock.Symbol}");
-                        await UpdateStock(stock, existingStock.Id);
+                        await UpdateStock(stock, existingStock);
                     }
                 }
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -49,13 +49,32 @@ namespace StockAnalysisApp.Data.Repositories
 
         private void ValidateStockDcf(Stock stock)
         {
-            if (!double.IsNaN(stock.Dcf.DCF) && !double.IsNaN(stock.Dcf.StockPrice))
+            if (double.IsNaN(stock.Dcf.DCF))
             {
-                if (double.IsInfinity(stock.Dcf.DCF))
-                {
-                    stock.Dcf.DCF = 999999999;
-                }
+                stock.Dcf.DCF = 0;
             }
+            if (double.IsNaN(stock.Dcf.StockPrice))
+            {
+                stock.Dcf.StockPrice = 0;
+            }
+
+            if (double.IsInfinity(stock.Dcf.DCF))
+            {
+                stock.Dcf.DCF = 999999999;
+            }
+
+            if (double.IsInfinity(stock.Dcf.StockPrice))
+            {
+                stock.Dcf.StockPrice = 999999999;
+            }
+
+            //if (!double.IsNaN(stock.Dcf.DCF) && !double.IsNaN(stock.Dcf.StockPrice))
+            //{
+            //    if (double.IsInfinity(stock.Dcf.DCF))
+            //    {
+            //        stock.Dcf.DCF = 999999999;
+            //    }
+            //}
         }
 
         public async Task AddStock(Stock stock)
@@ -63,7 +82,7 @@ namespace StockAnalysisApp.Data.Repositories
             try
             {
                 _context.Stocks.Add(stock);
-                await _context.SaveChangesAsync();
+                
             }
             catch (Exception ex)
             {
@@ -72,13 +91,13 @@ namespace StockAnalysisApp.Data.Repositories
             }
         }
 
-        public async Task UpdateStock(Stock stock, int id)
+        public async Task UpdateStock(Stock stock, Stock existingStocks)
         {
             try
             {
-                stock.Id = id;
-                _context.Entry(await _context.Stocks.FirstOrDefaultAsync(x => x.Symbol == stock.Symbol)).CurrentValues.SetValues(stock);
-                await _context.SaveChangesAsync();
+                stock.Id = existingStocks.Id;
+                _context.Stocks.Update(stock);
+
             }
             catch (Exception ex)
             {
@@ -89,7 +108,7 @@ namespace StockAnalysisApp.Data.Repositories
 
         public async Task<List<Stock>> GetStocks()
         {
-            return await _context.Stocks.ToListAsync();
+            return await _context.Stocks.Include(x=> x.Dcf).Include(x=> x.StockRating).ToListAsync();
         }
 
         public void Dispose()

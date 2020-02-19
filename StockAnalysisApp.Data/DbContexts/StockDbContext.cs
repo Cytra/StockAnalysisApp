@@ -10,12 +10,11 @@ namespace StockAnalysisApp.Data.DbContexts
 {
     public class StockDbContext : DbContext
     {
-        public DbSet<DcfDto> Dcfs { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp3;Trusted_Connection=True");
+                .UseSqlServer(@"Data Source=(LocalDb)\MSSQLLocalDB;Database=StockAnalysisApp11;Trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

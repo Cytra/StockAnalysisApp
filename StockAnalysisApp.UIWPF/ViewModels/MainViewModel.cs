@@ -21,7 +21,7 @@ namespace StockAnalysisApp.UIWPF.Views
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly IStockRepository _stockRepository;
+        private readonly IStockRepoFacade _stockRepoFacade;
         private readonly IStockListFacade _stockListFacade;
         private readonly IMapper _mapper;
         private readonly IWindowsLogger _logger;
@@ -109,7 +109,7 @@ namespace StockAnalysisApp.UIWPF.Views
 
 
         public MainViewModel(
-            IStockRepository stockRepository,
+            IStockRepoFacade stockRepoFacade,
             IStockListFacade stockListFacade,
             IMapper mapper,
             IWindowsLogger logger,
@@ -119,8 +119,8 @@ namespace StockAnalysisApp.UIWPF.Views
             CompanyKeyMetricsViewModel companyKeyMetricsViewModel
             )
         {
-            _stockRepository = stockRepository ?? throw new ArgumentNullException(nameof(stockRepository));
-            _stockListFacade = stockListFacade ?? throw new ArgumentNullException(nameof(stockRepository));
+            _stockRepoFacade = stockRepoFacade ?? throw new ArgumentNullException(nameof(stockRepoFacade));
+            _stockListFacade = stockListFacade ?? throw new ArgumentNullException(nameof(stockListFacade));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _dCFfacade = dCFfacade ?? throw new ArgumentNullException(nameof(dCFfacade));
@@ -139,16 +139,16 @@ namespace StockAnalysisApp.UIWPF.Views
             {
                 try
                 {
-                    Stocks = await _stockListFacade.GetStockList();
-                    SortedStocks = Stocks;
-                    //await _dCFfacade.GetDcfListWithBulkOrder(Stocks);
-                    //await _companyRatingFacade.GetStocksWithRatings(Stocks);
-
                     ToggleVisibility(true);
+                    Stocks = await _stockListFacade.GetStockList();
+                    Stocks = await _dCFfacade.GetDcfListWithBulkOrder(Stocks.ToList());
+                    Stocks = await _companyRatingFacade.GetStocksWithRatings(Stocks);
+                    SortedStocks = Stocks;
+                    await _stockRepoFacade.SaveStocks(Stocks);
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    _logger.WriteError("error on main VM preprare call", ex);
                 }
                 finally
                 {
@@ -177,7 +177,7 @@ namespace StockAnalysisApp.UIWPF.Views
             {
                 try
                 {
-                    Stocks = await _stockRepository.GetStocks();
+                    Stocks = await _stockRepoFacade.GetStocks();
                     SortedStocks = Stocks;
                 }
                 catch (Exception ex)

@@ -35,7 +35,7 @@
             Grid.Row="1"
             Grid.ColumnSpan="3"
             Command="{Binding GetNewDCF}"
-            >GET NEW DATA</Button>
+            >GET DATA</Button>
         <Label Grid.Row="3"
                Grid.Column="1">Stock Ticker</Label>
 
@@ -70,8 +70,8 @@
                 <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="*"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date, StringFormat=yyyy-MM-dd}" Width="*"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Dcf.StockPrice, StringFormat={}{0:#,#.00}}" Width="*"/>
-                <DataGridTextColumn Header="DCF" Binding="{Binding Dcf.DCF}" Width="*"/>
-                <DataGridTextColumn Header="Diff" Binding="{Binding Dcf.Diff}" Width="*"/>
+                <DataGridTextColumn Header="DCF" Binding="{Binding Dcf.DCF, StringFormat={}{0:#,#.00}}" Width="*"/>
+                <DataGridTextColumn Header="Diff" Binding="{Binding Dcf.Diff, StringFormat={}{0:#,#.00}}" Width="*"/>
                 <DataGridTextColumn Header="Score" Binding="{Binding StockRating.Score}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

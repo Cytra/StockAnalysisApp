@@ -13,23 +13,23 @@ namespace StockAnalysisApp.Services.ApiFacade
     {
         private readonly IStockListService _stockListService;
         private readonly IMapper _mapper;
-        private readonly IStockRepository _stockRepo;
+        private readonly IStockRepoFacade _stockRepoFacade;
 
         public StockListFacade(
             IStockListService stockListService,
             IMapper mapper,
-            IStockRepository stockRepo)
+            IStockRepoFacade stockRepoFacade)
         {
             _stockListService = stockListService ?? throw new ArgumentNullException(nameof(stockListService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _stockRepo = stockRepo ?? throw new ArgumentNullException(nameof(stockRepo));
+            _stockRepoFacade = stockRepoFacade ?? throw new ArgumentNullException(nameof(stockRepoFacade));
         }
 
         public async Task<List<Stock>> GetStockList()
         {
             var stockList = await _stockListService.GetStockList();
             var stocks = _mapper.Map<List<Stock>>(stockList.symbolsList);
-            await _stockRepo.SaveStocks(stocks);
+            //await _stockRepoFacade.SaveStocks(stocks);
             return stocks;
         }
     }

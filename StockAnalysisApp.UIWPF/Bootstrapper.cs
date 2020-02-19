@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using StockAnalysisApp.Core.DTOs;
 using StockAnalysisApp.Core.Model;
+using StockAnalysisApp.Data;
 using StockAnalysisApp.Data.DbContexts;
 using StockAnalysisApp.Data.Repositories;
 using StockAnalysisApp.Logger.Loggers;
@@ -38,17 +39,24 @@ namespace StockAnalysisApp.UIWPF
                 cfg.CreateMap<StockListItem, Stock>()
                 .ForMember(dest => dest.Name, org => org.MapFrom(source => source.name))
                 .ForMember(dest => dest.Price, org => org.MapFrom(source => source.price))
-                .ForMember(dest => dest.Symbol, org => org.MapFrom(source => source.symbol));
+                .ForMember(dest => dest.Symbol, org => org.MapFrom(source => source.symbol))
+                .ForMember(desc => desc.Dcf, org => org.Ignore())
+                .ForMember(desc => desc.Metrics, org => org.Ignore())
+                .ForMember(desc => desc.StockRating, org => org.Ignore());
 
                 cfg.CreateMap<CompanyKeyMetricsMetricsDto, StockMetrics>();
 
                 cfg.CreateMap<CompanyKeyMetricsDto, Stock>()
-                .ForMember(dest => dest.Metrics, org => org.MapFrom(source => source.metrics));
+                .ForMember(dest => dest.Metrics, org => org.MapFrom(source => source.metrics))
+                .ForMember(desc => desc.Dcf, org => org.Ignore())
+                .ForMember(desc => desc.StockRating, org => org.Ignore());
 
                 cfg.CreateMap<RatingDto, StockRating>();
 
                 cfg.CreateMap<CompanyRatingDto, Stock>()
-                .ForMember(desc => desc.StockRating, org => org.MapFrom(source => source.Rating));
+                .ForMember(desc => desc.StockRating, org => org.MapFrom(source => source.Rating))
+                .ForMember(desc => desc.Dcf, org => org.Ignore())
+                .ForMember(desc => desc.Metrics, org => org.Ignore());
 
                 cfg.CreateMap<DcfDto, Dcf>();
             });
@@ -68,6 +76,7 @@ namespace StockAnalysisApp.UIWPF
                 .PerRequest<ICompanyKeyMetricsFacade, CompanyKeyMetricsFacade>()
                 .PerRequest<ICompanyRatingFacade, CompanyRatingFacade>()
                 .PerRequest<IStockListFacade, StockListFacade>()
+                .PerRequest<IStockRepoFacade, StockRepoFacade>()
                 //Repo
                 .PerRequest<IDcfRepository, DcfRepository>()
                 .PerRequest<IStockRepository, StockRepository>()

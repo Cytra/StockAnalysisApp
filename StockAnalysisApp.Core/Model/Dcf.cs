@@ -7,6 +7,7 @@ namespace StockAnalysisApp.Core.Model
     public class Dcf
     {
         public int Id { get; set; }
+        public int StockId { get; set; }
         public string Symbol { get; set; }
         public DateTime Date { get; set; }
         public double StockPrice { get; set; }

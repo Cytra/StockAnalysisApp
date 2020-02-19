@@ -19,30 +19,6 @@ namespace StockAnalysisApp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("StockAnalysisApp.Core.DTOs.DcfDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("DCF")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("StockPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Symbol")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Dcfs");
-                });
-
             modelBuilder.Entity("StockAnalysisApp.Core.Model.Dcf", b =>
                 {
                     b.Property<int>("Id")
@@ -56,6 +32,9 @@ namespace StockAnalysisApp.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
                     b.Property<double>("StockPrice")
                         .HasColumnType("float");
 
@@ -63,6 +42,9 @@ namespace StockAnalysisApp.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StockId")
+                        .IsUnique();
 
                     b.ToTable("Dcf");
                 });
@@ -77,26 +59,16 @@ namespace StockAnalysisApp.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DcfId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("StockRatingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DcfId");
-
-                    b.HasIndex("StockRatingId");
 
                     b.ToTable("Stocks");
                 });
@@ -308,20 +280,24 @@ namespace StockAnalysisApp.Data.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StockId")
+                        .IsUnique();
 
                     b.ToTable("StockRating");
                 });
 
-            modelBuilder.Entity("StockAnalysisApp.Core.Model.Stock", b =>
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.Dcf", b =>
                 {
-                    b.HasOne("StockAnalysisApp.Core.Model.Dcf", "Dcf")
-                        .WithMany()
-                        .HasForeignKey("DcfId");
-
-                    b.HasOne("StockAnalysisApp.Core.Model.StockRating", "StockRating")
-                        .WithMany()
-                        .HasForeignKey("StockRatingId");
+                    b.HasOne("StockAnalysisApp.Core.Model.Stock", null)
+                        .WithOne("Dcf")
+                        .HasForeignKey("StockAnalysisApp.Core.Model.Dcf", "StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StockAnalysisApp.Core.Model.StockMetrics", b =>
@@ -329,6 +305,15 @@ namespace StockAnalysisApp.Data.Migrations
                     b.HasOne("StockAnalysisApp.Core.Model.Stock", null)
                         .WithMany("Metrics")
                         .HasForeignKey("StockId");
+                });
+
+            modelBuilder.Entity("StockAnalysisApp.Core.Model.StockRating", b =>
+                {
+                    b.HasOne("StockAnalysisApp.Core.Model.Stock", null)
+                        .WithOne("StockRating")
+                        .HasForeignKey("StockAnalysisApp.Core.Model.StockRating", "StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

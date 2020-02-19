@@ -32,7 +32,7 @@ namespace StockAnalysisApp.Services.ApiFacade
         public async Task<List<Stock>> GetDcfListWithBulkOrder(List<Stock> stocks)
         {
 
-            stocks = await RemoreDcfInRepo(stocks);
+            //stocks = await RemoreDcfInRepo(stocks);
             var dcfs = await _dcfService.GetDcfList(stocks);
             foreach(var stock in stocks)
             {
